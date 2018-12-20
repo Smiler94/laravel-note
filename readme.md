@@ -25,3 +25,32 @@
 `lavavel new projectName`
 
 当前目录下会创建一个新的名为`projectName` 的子目录，并在其中创建了一个全新的 Laravel 项目
+
+#### Laravel 目录结构
+
+创建一个 demo，目录结构如下
+
+````
+- app/             应用程序大部分文件存放的地方，比如模型、控制器、路由定义、命令，以及 PHP 域名代码等
+- bootstrap/       包含了 Laravel 框架每次运行时使用的文件
+- config/          用于放置所有的配置文件
+- database/        用于放置数据库迁移和数据库种子文件
+- public/          当做站点运行时服务器指向的目录，该目录包含 index.php 入口文件，也放置一些公共文件，如图片、样式表、脚本或下载的文件等
+- resources/       用于放置所有非 PHP 的其他脚本文件，比如视图文件、语言文件、Sass/Lass，以及javaScript等
+- routes/          用于放置所有路由定义文件，包括 HTTP 路由、控制台路由和 Artisan 命令等 
+- storage/         用于放置缓存、日志和系统编译文件
+- tests/           用于放置单元测试用例和集成测试文件
+- vendor           用于放置 Composer 安装的依赖关系文件，是一个 git 忽略文件
+- .env             指定环境变量，不同环境一些变量有差异在这里进行配置，是一个 git 忽略文件
+- .env.example     .env文件的模板
+- .gitattributes   git 配置文件
+- .gitignore       git 配置文件
+- artisan          从命令行运行 Artisan 命令的入口文件
+- composer.json    定义了项目的基本信息和依赖关系
+- composer.lock    composer 配置文件，不可编辑
+- package.json     npm 的配置文件，处理前端依赖
+- phpunit.xml      PHPUnit 的配置文件
+- readme.md        介绍项目的信息
+- server.php       备份服务器文件，尝试在功能较差的服务器中仍然对 Laravel 应用程序进行预览
+- webpack.mix.js   Glup 的配置文件
+````
