@@ -18,13 +18,21 @@
     
 如果已经全局安装好 Composer ，可以执行以下命令来安装 Laravel 安装工具
 
-`composer global require "laravel/installer=~1.1"`
+`~ composer global require "laravel/installer=~1.1"`
 
 现在可以使用以下命令来创建一个新的 Laravel 项目
 
-`lavavel new projectName`
+`~ lavavel new projectName`
 
 当前目录下会创建一个新的名为`projectName` 的子目录，并在其中创建了一个全新的 Laravel 项目
+
+- 通过 composer 的 create-project
+
+Composer 提供了一个 create-project 的命令，用于创建具有特定结构的新项目
+
+`~ composer create-project laravel/laravel project-name --prefer-dist "5.5.*"`
+
+执行效果和 Laravel 安装工具一致
 
 #### Laravel 目录结构
 
@@ -40,7 +48,7 @@
 - routes/          用于放置所有路由定义文件，包括 HTTP 路由、控制台路由和 Artisan 命令等 
 - storage/         用于放置缓存、日志和系统编译文件
 - tests/           用于放置单元测试用例和集成测试文件
-- vendor           用于放置 Composer 安装的依赖关系文件，是一个 git 忽略文件
+- vendor/          用于放置 Composer 安装的依赖关系文件，是一个 git 忽略文件
 - .env             指定环境变量，不同环境一些变量有差异在这里进行配置，是一个 git 忽略文件
 - .env.example     .env文件的模板
 - .gitattributes   git 配置文件
@@ -54,3 +62,38 @@
 - server.php       备份服务器文件，尝试在功能较差的服务器中仍然对 Laravel 应用程序进行预览
 - webpack.mix.js   Glup 的配置文件
 ````
+
+#### 启动和运行
+
+- 使用自带的服务器
+
+在项目根目录下使用以下命令来使用 php 自带服务器运行 Laravel 应用
+
+`~ php artisan serve`
+
+将会出现以下提示
+
+`Laravel development server started: <http://127.0.0.1:8000>`
+
+这时可以通过访问 `127.0.0.1:8000` 来访问应用
+
+#### 路由和控制器
+
+##### 路由定义
+
+在一个 Laravel 应用中，可以在 `routes/web.php` 中定义 Web 路由，也可以在 `routes/api.php` 中定义 Api 路由。Web 路由是提供给终端用户进行访问的，Api 路由则是提供 Api 服务的。
+
+> 在 Laravel 5.3版本之前的项目中，只有一个路由文件，该路由文件位于 `app/Http/routes.php` 中
+
+使用以下代码定义一个简单路由
+
+````
+Route::get('/hello', function() {
+    return 'hello, world';
+});
+````
+
+第一个参数为访问路径，第二个参数为一个闭包，这时候访问 `/hello` 就会执行定义好的闭包，返回结果。
+
+> 闭包的执行结果应该 return 而不是 echo 或者 print，原因是 Laravel 的请求和响应过程包含很多封装起来的内容，包括所谓的中间件。仅仅定义好路由闭包以及控制器方法，还不足以将输出发送到浏览器，所以这里采用返回内容的方式，这样返回的内容可以继续在 response stack 以及中间件中运行，运行完成后再返回给浏览器。
+
