@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'http://laravel.lz/*', // 禁用SCRF  TODO坑
     ];
 }
