@@ -49,9 +49,31 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
-        $title = $request->input('title');
-        $description = $request->input('description');
+//        $all = $request->all();
+//        var_dump($all);
+//        $title = $all['title'];
+//        $description = $all['description'];
 
+//        $req = $request->except('_token');
+//        $req = $request->except(['_token', 'title']);
+
+//        $req = $request->only('title');
+//        $req = $request->only(['title','description']);
+
+//        if ($request->filled('title')) {
+//            return 'title 存在且有值';
+//        } elseif ($request->exists('title')) {
+//            return 'title 存在但为空';
+//        } else {
+//            return 'title 不存在';
+//        }
+
+//        $title = $request->input('title');
+//        $description = $request->input('description');
+
+        $title = $request->json('title');
+        $description = $request->json('description');
+//        return $req;
         return "title is {$title}, description is {$description}";
     }
 
