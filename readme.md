@@ -246,7 +246,7 @@ Route::group(['namespace' => 'API'], function () {
 
 控制器统一放在 `app/Http/Controllers` 目录下，可以使用 Artisan 来创建一个新的控制器
 
-`php artisan make:controller NewController`
+`~ php artisan make:controller NewController`
 
 #### 获取用户输入
 
@@ -291,16 +291,47 @@ public function store(\Illuminate\Http\Request $request)
 
 使用以下命令创建一个资源控制器
 
-`php artisan make:controller TasksController --resource`
+`~ php artisan make:controller TaskController --resource`
+
+##### 资源控制器的方法
 
 生成的控制器中预先包含了 `index` 、`create` 、`store` 、`show` 、`edit` 、`update`  、`destory` 几个方法
 
 |HTTP动词|URI|控制器方法|路由名称|描述|
 |----|----|----|----|----|
-|GET|tasks|index()|tasks.index|显示所有任务|
-|GET|tasks/create|create()|tasks.create|显示创建任务表单|
-|POST|tasks|store()|tasks.store|新建表单提交数据|
-|GET|tasks/{taskId}|show()|tasks.show|显示一个任务|
-|GET|tasks/{taskId}/edit()|tasks.edit|显示编辑任务表单|
-|PUT/PATCH|tasks/{taskId}/update()|tasks.update|根据Id更新表单提交数据|
-|DELETE|tasks/{taskId}|destroy()|tasks.destroy|删除一个任务|
+|GET|task|index()|task.index|显示所有任务|
+|GET|task/create|create()|task.create|显示创建任务表单|
+|POST|task|store()|task.store|新建表单提交数据|
+|GET|task/{taskId}|show()|task.show|显示一个任务|
+|GET|task/{taskId}/edit|edit()|task.edit|显示编辑任务表单|
+|PUT/PATCH|tasks/{taskId}|update()|task.update|根据Id更新表单提交数据|
+|DELETE|tasks/{taskId}|destroy()|task.destroy|删除一个任务|
+
+> 考虑能否使用给一个通用的控制器集成所有的 CURD 入口
+
+##### 绑定资源控制器
+
+为了不用手动为资源控制器的每个方法建立一个路由，Laravel 提供了“资源控制器绑定”的方法
+
+````
+// routes/web.php
+// 资源控制器的路由定义
+Route::resource('task', 'TaskController');
+````
+
+> 可以使用 `~ php artisan route:list` 命令查看当前应用程序中定义了哪些路由
+
+#### 路由缓存
+
+Laravel 的引导程序需要解析 routes/*.php 文件，这个过程大概需要几十到几百毫秒，路由缓存则可以极大程度上加快这一过程的速度
+
+使用以下命令对路由文件进行缓存，Laravel 会将 routes/*.php 文件的结果进行序列化
+
+`~ php artisan route:cache`
+
+如果要删除缓存，使用以下命令
+
+`~ php artisan route:clear`
+
+> * 要想进行路由缓存，要求路由文件中不能包含闭包路由，因此推荐所有的路由定义使用控制器和资源路由
+> * 修改了路由文件后，需要重新执行命令来更新路由缓存，否则修改将不生效。因此在本地开发时，建议不进行路由缓存，部署到生产环境后再进行

@@ -82,4 +82,4 @@ Route::group(['prefix' => 'prefix'], function() {
 });
 
 Route::get('task/home', 'TaskController@home');
-Route::post('task', 'TaskController@store');
+Route::resource('task', 'TaskController');
