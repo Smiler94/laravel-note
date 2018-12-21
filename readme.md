@@ -247,3 +247,60 @@ Route::group(['namespace' => 'API'], function () {
 控制器统一放在 `app/Http/Controllers` 目录下，可以使用 Artisan 来创建一个新的控制器
 
 `php artisan make:controller NewController`
+
+#### 获取用户输入
+
+控制器中最常见的操作上试从用户那里获取输入内容并对其进行处理，从 POST 中获取用户输入主要有两种方式：使用 Input facade或者请求对象 Request
+
+##### 使用 Input
+
+````
+// TaskController.php
+
+use Illuminate\Support\Facades\Input;
+// 书上说也可以使用 \Input，实际操作发现会报错
+...
+public function store()
+{
+    $title = Input::get('title');
+    $description = Input::get('description');
+    
+    return "title is {$title}, description is {$description}";
+}
+````
+
+##### 使用 Request 对象注入到控制器
+
+在控制器的方法中指定需要的 Request 对象
+
+````
+// TaskController.php
+
+public function store(\Illuminate\Http\Request $request)
+{
+    $title = $request->input('title');
+    $description = $request->input('description');
+
+    return "title is {$title}, description is {$description}";
+}
+````
+
+#### 资源控制器
+
+对于传统的 Rest/CURD 控制器，Laravel 定义了一套命名规范、开箱即用的开发工具以及对应的路由定义，这样就可以提高开发 Rest 接口的效率
+
+使用以下命令创建一个资源控制器
+
+`php artisan make:controller TasksController --resource`
+
+生成的控制器中预先包含了 `index` 、`create` 、`store` 、`show` 、`edit` 、`update`  、`destory` 几个方法
+
+|HTTP动词|URI|控制器方法|路由名称|描述|
+|----|----|----|----|----|
+|GET|tasks|index()|tasks.index|显示所有任务|
+|GET|tasks/create|create()|tasks.create|显示创建任务表单|
+|POST|tasks|store()|tasks.store|新建表单提交数据|
+|GET|tasks/{taskId}|show()|tasks.show|显示一个任务|
+|GET|tasks/{taskId}/edit()|tasks.edit|显示编辑任务表单|
+|PUT/PATCH|tasks/{taskId}/update()|tasks.update|根据Id更新表单提交数据|
+|DELETE|tasks/{taskId}|destroy()|tasks.destroy|删除一个任务|
