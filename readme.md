@@ -227,3 +227,23 @@ Route::group(['prefix' => 'prefix'], function() {
     });
 });
 ````
+
+##### 子域名路由（先跳过）
+
+##### 命名空间前缀
+
+当按照子域名或者路由前缀的方式对路由进行分组时，它们的控制器可能会有相同的 PHP 命名空间。所有的 API 控制器都可能在一个 API 命名空间内，通过使用路由组命名空间前缀，就可以避免在群组内使用很长的控制器进行引用
+
+````
+Route::group(['namespace' => 'API'], function () {
+    Route::get('/api', 'ControllerB@index');
+});
+````
+
+#### 控制器
+
+控制器并不是一个应用程序的唯一入口，还可能有 cron作业(定时任务)、Artisan 命令行调用、队列作业等。因此业务逻辑尽量不在控制器中处理，控制器的主要任务是捕获 HTTP 请求，并传递给其他部分处理
+
+控制器统一放在 `app/Http/Controllers` 目录下，可以使用 Artisan 来创建一个新的控制器
+
+`php artisan make:controller NewController`

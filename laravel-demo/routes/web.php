@@ -80,3 +80,5 @@ Route::group(['prefix' => 'prefix'], function() {
         return 'prefix api';
     });
 });
+
+Route::get('task/home', 'TaskController@home');
