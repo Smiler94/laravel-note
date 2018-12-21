@@ -66,7 +66,7 @@ Route::get('param/{id}', function($id) {
 当有多个参数时，路由定义中的参数和闭包中的形参从左到右进行匹配，名称可以不同，但建议保持一致
 
 ````php
-Route::get('param/multi/{id1}/{id2}, function($id3, $id4) {
+Route::get('param/multi/{id1}/{id2}', function($id3, $id4) {
     return "id1 is {$id3},id2 is {$id4}";
 });
 ````

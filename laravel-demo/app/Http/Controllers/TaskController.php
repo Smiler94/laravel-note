@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     //
-    public function home()
+    public function home(Request $request)
     {
-        return 'this is task home';
+        $model = $request->segment(1);
+        $id = $request->segment(2);
+
+        return "model is {$model}, id is {$id}";
     }
 
 //    public function store()
@@ -86,6 +89,7 @@ class TaskController extends Controller
     public function show($id)
     {
         //
+        return "id is {$id}";
     }
 
     /**

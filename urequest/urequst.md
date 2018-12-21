@@ -37,3 +37,30 @@ Request 对象常用方法
 > json 存在的原因
 > - 明确应用程序的输入源为 json 格式
 > - 如果 POST 没有 `application/json` 请求头，json 仍能正确读取到数据，但是 input 不能
+
+#### 路由数据
+
+URL 中可能也会包含有部分用户数据，有两种方法可以获取到这些数据
+
+##### 通过 Request 对象
+
+对于URL，在域名之后的每组字符都称为片段
+
+`http://laraval.lz/users/15` 这个 URL 包含有 `users` 和 `15` 两个片段
+
+使用 `$request` 的 `segment` 方法可以获取指定索引的单个片段，索引值从1开始，所以上述例子中 `$request->segment(1)` 将返回 `users`
+
+##### 通过路由参数
+
+路由中的参数同样可以被注入到控制器的方法中
+
+````php
+// routes/web.php
+Route::get('test/{id}', 'TaskController@view');
+
+// TaskController
+public function show($id)
+{
+    return "id is {$id}";
+}
+````
