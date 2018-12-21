@@ -8,7 +8,7 @@
 
 使用以下代码定义一个简单路由
 
-````
+````php
 Route::get('/hello', function() {
     return 'hello, world';
 });
@@ -22,7 +22,7 @@ Route::get('/hello', function() {
 
 Laravel 可以使用 HTTP 方法来定义路由，与之前的定义类似，只是将 `get` 换成其他 HTTP 方法
 
-````
+````php
 Route::post('/hello', function() {
     return 'hello,post';
 });
@@ -32,7 +32,7 @@ Route::post('/hello', function() {
 
 也可以使用 `any` 来匹配任意一个方法，或者使用 `match` 来匹配指定的方法
 
-````
+````php
 Route::any('/any', function() {
     return 'hello,world';
 });
@@ -47,7 +47,7 @@ Route::match(['get', 'post'], '/hello', function() {
 
 除了闭包，还可以使用控制器名和方法名来定义路由处理，如下
 
-````
+````php
 Route::get('/welcome', 'WelcomeController@index');
 ````
 
@@ -57,7 +57,7 @@ Route::get('/welcome', 'WelcomeController@index');
 
 如果定义的路由具有参数（可变的URL地址段），那么可以在路由中定义它们，并传递给闭包
 
-````
+````php
 Route::get('param/{id}', function($id) {
     return 'id is '.$id;
 });
@@ -65,16 +65,17 @@ Route::get('param/{id}', function($id) {
 
 当有多个参数时，路由定义中的参数和闭包中的形参从左到右进行匹配，名称可以不同，但建议保持一致
 
-````
+````php
 Route::get('param/multi/{id1}/{id2}, function($id3, $id4) {
     return "id1 is {$id3},id2 is {$id4}";
 });
 ````
+
 > 参数数量需要严格保持一致，否则会报错
 
 还可以通过在参数名称后添加一个 `?` 来实现路由参数的选择，但这种情况必须给对应的参数设置默认值
 
-````
+````php
 Route::get('/param/option/{id?}', function($id = 2) {
     return "id is {$id}";
 });
@@ -82,7 +83,7 @@ Route::get('/param/option/{id?}', function($id = 2) {
 
 还可以使用正则表达式来定义一个路由，这时，只有参数满足特定的模式时才会匹配
 
-````
+````php
 Route::get('/param/preg/{id}', function($id) {
     return "id is {$id}";
 })->where('id', '[0-9]+');
@@ -96,7 +97,7 @@ Route::get('/param/preg_multi/{id}/{name}', function($id, $name) {
 
 Laravel 允许为每个路由起一个名字，这样就可以在不明确引用什么 URL 的情况下引用该路由
 
-````
+````php
 Route::get('login', function() {
     return 'login';
 })->name('login');
@@ -108,7 +109,7 @@ Route::get('login', function() {
 
 路由组允许多个路由组合在一起，将任何共享的配置应用于整个路由组
 
-````
+````php
 Route::group([], function() {
     Route::get('/hello', function() {
         return 'hello';
@@ -123,7 +124,7 @@ Route::group([], function() {
 
 路由组最常见的功能就是将中间件应用于一组路由中，比如应用在权限控制方面，限制某组路由只能在用户登录状态才能访问
 
-````
+````php
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', function() {
         return 'dashboard';
@@ -137,7 +138,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 如果有一组路由需要共享某个路径段，那么可以使用路由组来简化结构
 
-````
+````php
 Route::group(['prefix' => 'prefix'], function() {
     Route::get('/', function() {
         return 'prefix root';
@@ -155,7 +156,7 @@ Route::group(['prefix' => 'prefix'], function() {
 
 当按照子域名或者路由前缀的方式对路由进行分组时，它们的控制器可能会有相同的 PHP 命名空间。所有的 API 控制器都可能在一个 API 命名空间内，通过使用路由组命名空间前缀，就可以避免在群组内使用很长的控制器进行引用
 
-````
+````php
 Route::group(['namespace' => 'API'], function () {
     Route::get('/api', 'ControllerB@index');
 });

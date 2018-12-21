@@ -12,7 +12,7 @@
 
 ##### 使用 Input
 
-````
+````php
 // TaskController.php
 
 use Illuminate\Support\Facades\Input;
@@ -31,7 +31,7 @@ public function store()
 
 在控制器的方法中指定需要的 Request 对象
 
-````
+````php
 // TaskController.php
 
 public function store(\Illuminate\Http\Request $request)
@@ -71,7 +71,7 @@ public function store(\Illuminate\Http\Request $request)
 
 为了不用手动为资源控制器的每个方法建立一个路由，Laravel 提供了“资源控制器绑定”的方法
 
-````
+````php
 // routes/web.php
 // 资源控制器的路由定义
 Route::resource('task', 'TaskController');
