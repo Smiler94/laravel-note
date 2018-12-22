@@ -41,6 +41,8 @@ Route::get('/param/option/{id?}', function($id = 2) {
     return "id is {$id}";
 });
 
+Route::post('/file/upload', 'FileController@upload');
+
 Route::get('/param/preg/{id}', function($id) {
     return "id is {$id}";
 })->where('id', '[0-9]+');

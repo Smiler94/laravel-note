@@ -14,5 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         'http://laravel.lz/*', // 禁用SCRF  TODO坑
+        'http://127.0.0.1:8000/*'
     ];
 }

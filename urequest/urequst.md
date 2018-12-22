@@ -64,3 +64,19 @@ public function show($id)
     return "id is {$id}";
 }
 ````
+
+#### 文件上传
+
+使用 request 对象实例的 `file` 方法可以访问任何上传的文件，该方法的参数是文件的输入名称，并返回 `Symfony\Component\HttpFoundation\File\UploadedFile` 的实例
+
+````php
+// FileController.php
+public function upload(Request $request)
+{
+    if ($request->hasFile('file')) {
+        var_dump($request->file('file'));
+    }
+}
+````
+
+> 确保表单上添加了 `enctype="multipar/form-data"` 属性
