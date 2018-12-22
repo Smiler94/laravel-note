@@ -84,3 +84,4 @@ Route::group(['prefix' => 'prefix'], function() {
 });
 
 Route::resource('task', 'TaskController');
+Route::resource('recipe', 'RecipeController');

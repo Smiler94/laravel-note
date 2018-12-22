@@ -80,3 +80,24 @@ public function upload(Request $request)
 ````
 
 > 确保表单上添加了 `enctype="multipar/form-data"` 属性
+
+> 使用 postman 测试时，需要把 Headers 里的 `Content-type` 属性去掉
+
+#### 数据验证
+
+主要有两种方式用于验证传入的数据
+
+##### 在控制器中使用 `ValidatesRequests` 的 `validate` 方法
+
+````php
+// RecipeController.php
+public function store(Request $request)
+{
+    //
+    $this->validate($request, [
+        'title' => 'required|max:125',
+        'body' => 'required'
+    ]);
+
+}
+````
