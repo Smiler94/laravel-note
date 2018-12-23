@@ -76,3 +76,13 @@ Artisan 命令有一些选项，这些选项在任何时刻都可以使用
     - `list` 查看应用中的所有路由
     - `cache` 缓存路由
     - `clear` 清理路由
+- `schedule`
+    - `run` 预先设置系统的 crontab 每一分钟运行这个命令
+- `session`
+    - `table` 通过数据库支持的会话来为应用创建一个迁移
+- `storage`
+    - `link` 创建一个从 `public/storage` 到 `storage/app/public` 的符号链接
+- `vendor`
+    - `publish` 一些特定的包需要公开一些内容，这样既可以在 public 目录下提供服务也可以对其进行修改，无论哪种方式，这些包在 Laravel 中注册可公开的内容，但运行这个命令时，这些包会在特定的位置上显示
+- `view`
+    - `clear` 清理视图缓存
