@@ -14,6 +14,7 @@ class RecipeController extends Controller
     public function index()
     {
         //
+        return "hello";
     }
 
     /**
@@ -35,6 +36,7 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         //
+        var_dump($request);exit;
         $this->validate($request, [
             'title' => 'required|max:125',
             'body' => 'required'
