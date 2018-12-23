@@ -85,3 +85,6 @@ Route::group(['prefix' => 'prefix'], function() {
 
 Route::resource('task', 'TaskController');
 Route::resource('recipe', 'RecipeController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
