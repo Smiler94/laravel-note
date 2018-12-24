@@ -86,3 +86,95 @@ Artisan 命令有一些选项，这些选项在任何时刻都可以使用
     - `publish` 一些特定的包需要公开一些内容，这样既可以在 public 目录下提供服务也可以对其进行修改，无论哪种方式，这些包在 Laravel 中注册可公开的内容，但运行这个命令时，这些包会在特定的位置上显示
 - `view`
     - `clear` 清理视图缓存
+    
+#### 自己编写一个 Artisan 命令
+
+Artisan 命令是可扩展的，开发者可以编写自己需要的命令
+
+##### 创建一个新命令
+
+使用以下命令来创建一个新的 Artisan 命令
+
+`~ php artisan make:command YourCommandName --command=command_name:command_sign`
+
+命令存储在 `app/Console/Commands/{YourCommandName}.php` ，生成的文件结构如下
+
+````php
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+
+class WelcomNewUsers extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'email:newusers';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        //
+    }
+}
+````
+
+##### 注册命令
+
+为了使这个命令能够使用，还需要注册这个命令
+
+在 `app/Console/Kernel.php` 的 `$commands` 属性中添加需要注册的类名
+
+````php
+// app/Console/Kernel.php
+
+protected $commands = [
+    //
+    Commands\WelcomNewUsers::class,
+];
+````
+
+##### 编写命令代码和执行
+
+在 `hanlde()` 方法中编写命令的逻辑代码
+
+````
+// app/Console/Commands/WelcomeNewUsers.php
+public function handle()
+{
+    //
+    echo '给用户发邮件';
+}
+````
+
+现在就可以执行这个命令了
+
+````powershell
+~ php artisan email:newusers
+给用户发邮件
+````
+
+其中的 `email:newusers` 就是在命令类中定义的 `$signature` 属性
