@@ -11,7 +11,7 @@ class WelcomNewUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'email:newusers';
+    protected $signature = 'email:newusers {userId}';
 
     /**
      * The console command description.
@@ -38,6 +38,6 @@ class WelcomNewUsers extends Command
     public function handle()
     {
         //
-        echo '给用户发邮件';
+        echo '给'.$this->argument('userId').'用户发邮件';
     }
 }

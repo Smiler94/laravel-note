@@ -178,3 +178,41 @@ public function handle()
 ````
 
 其中的 `email:newusers` 就是在命令类中定义的 `$signature` 属性
+
+#### 参数和选项
+
+命令的 `$signature` 属性中可以定义命令的参数和选项，有固定的语法，例子如下
+
+`protect $signature = 'password:reset {userId} {--sendEmail}'`
+
+ ##### 必选参数、可选参数和默认参数
+ 
+ - 必选参数用 `{}` 包起来  `password:reset {userId}`
+ - 可选参数在后面加个 `?`   `password:reset {userId?}`
+ - 默认的可选参数  `password:reset {userId=1}`
+ 
+ ##### 选项、待定值和默认值
+ 
+ 选项和参数类似，但是选项需要增加 `--` 前缀
+ 
+ `password:reset {--sendEmail}`
+ 
+ 如果要为选项赋值，那么在它的 `signature` 属性后面跟一个等号, 定义时可以定义默认值
+ 
+ `password:reset {--password=default}`
+ 
+ ##### 参数数组和选项数组
+ 
+ 使用 `*` 来定义数组
+ 
+ `password:reset {userIds*}`
+ 
+ `password:reset {--userIds*}`
+ 
+ 对应使用如下
+ 
+ `password:reset 1 2 3`
+ 
+ `password:reset --userIds=1 --userIds=2 --userIds=3`
+ 
+ > 参数数组必须位于最后
