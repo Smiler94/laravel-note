@@ -216,3 +216,59 @@ public function handle()
  `password:reset --userIds=1 --userIds=2 --userIds=3`
  
  > 参数数组必须位于最后
+ 
+ ##### 输入描述
+ 
+ `~ php artisan help` 命令可以用来查看内置的 Artisan 命令，同样可以用于查看自定义的命令
+ 
+ ````php
+ protected $signature = 'password:reset
+                         {userId : The ID of the user}
+                         {--sendEmail : Whether to send user an email}';
+ ````
+ 
+ #### 输入
+ 
+ 有两种方式可以用于检索参数和选项的值
+ 
+ ##### argument()
+ 
+ 没有参数的 `$this->argument()` 会返回一个包含所有参数的数组，数组的第一个元素是命令；当传入参数时将会返回指定参数的值
+ 
+ ````php
+ // 定义 "password:reset {userId}"
+ php artisan password:reset 5
+ 
+ // $this->augument()
+ [
+    "command" => "password:reset",
+    "userId" => "5"
+ ]
+ 
+ // $this->argument('userId') 
+ "5"
+ ````
+ 
+ ##### option()
+ 
+ 没有参数的 `$this->option()` 会返回一个包含所有选项的数组，包括默认为 false 或者 null 的选项；当传入参数时，将会返回指定选项的值
+ 
+ ````
+ // 定义 "password:reset {--userId=}
+ php artisan password:reset --userId=5
+ 
+ // $this->option()
+ [
+    "userId" => "5",
+    "help" => false,
+    "quiet" => false,
+    "verbose" => false,
+    "version" => false,
+    "no-ansi" => false,
+    "no-interaction" => false,
+    "env" => null
+ ]
+ 
+ // $this->option('userId')
+ "5"
+ ````

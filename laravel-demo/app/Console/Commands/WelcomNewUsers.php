@@ -11,7 +11,9 @@ class WelcomNewUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'email:newusers {userId}';
+    protected $signature = 'email:newusers
+                            {userId : The ID of the user}
+                            {--sendEmail : Whether to send user an email}';
 
     /**
      * The console command description.
@@ -38,6 +40,12 @@ class WelcomNewUsers extends Command
     public function handle()
     {
         //
-        echo '给'.$this->argument('userId').'用户发邮件';
+        $userId = $this->argument('userId');
+        $sendEmail = $this->option('sendEmail');
+
+        echo '新用户 ID 为:'.$userId.PHP_EOL;
+        if ($sendEmail) {
+            echo '给用户发送邮件'.PHP_EOL;
+        }
     }
 }
