@@ -39,7 +39,5 @@ class ResetPassword extends Command
                 exit("Hello, {$email}, your password has changed successfully".PHP_EOL);
             }
         }
-
-
     }
 }

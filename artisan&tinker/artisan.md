@@ -310,3 +310,36 @@ $email = $this->ask('What is your email address?');
 ````
 $password = $this->secret('What is your old password?');
 ````
+
+##### 实例
+
+修改密码实例
+
+````
+public function handle()
+{
+    // 输入用户邮箱
+    $email = $this->ask('What is your email address?');
+    // 模拟原始密码
+    $oldPasswordConfirm = '123456';
+    // 用户输入当前密码
+    $oldPassword = $this->secret('What is your old password?');
+    // 验证密码是否正确
+    if ($oldPassword != $oldPasswordConfirm) {
+        // 不正确，提示错误
+        exit('Sorry, the password you entered is wrong'.PHP_EOL);
+    } else {
+        // 输入新密码
+        $newPassword = $this->secret('Please enter the new password');
+        // 新密码确认
+        $passwordConfirm = $this->secret('Please enter the new password again');
+        // 两次输入密码不一致，提示错误
+        if ($newPassword != $passwordConfirm) {
+            exit('Sorry, the password you entered were different'.PHP_EOL);
+        } else {
+            // 提示修改成功
+            exit("Hello, {$email}, your password has changed successfully".PHP_EOL);
+        }
+    }
+}
+````
