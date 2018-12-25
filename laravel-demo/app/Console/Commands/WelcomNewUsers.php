@@ -13,7 +13,7 @@ class WelcomNewUsers extends Command
      */
     protected $signature = 'email:newusers
                             {userId : The ID of the user}
-                            {--sendEmail : Whether to send user an email}';
+                            {--sendEmail=: Whether to send user an email}';
 
     /**
      * The console command description.

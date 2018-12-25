@@ -185,80 +185,80 @@ public function handle()
 
 `protect $signature = 'password:reset {userId} {--sendEmail}'`
 
- ##### 必选参数、可选参数和默认参数
- 
- - 必选参数用 `{}` 包起来  `password:reset {userId}`
- - 可选参数在后面加个 `?`   `password:reset {userId?}`
- - 默认的可选参数  `password:reset {userId=1}`
- 
- ##### 选项、待定值和默认值
- 
- 选项和参数类似，但是选项需要增加 `--` 前缀
- 
- `password:reset {--sendEmail}`
- 
- 如果要为选项赋值，那么在它的 `signature` 属性后面跟一个等号, 定义时可以定义默认值
- 
- `password:reset {--password=default}`
- 
- ##### 参数数组和选项数组
- 
- 使用 `*` 来定义数组
- 
- `password:reset {userIds*}`
- 
- `password:reset {--userIds*}`
- 
- 对应使用如下
- 
- `password:reset 1 2 3`
- 
- `password:reset --userIds=1 --userIds=2 --userIds=3`
- 
- > 参数数组必须位于最后
- 
- ##### 输入描述
- 
- `~ php artisan help` 命令可以用来查看内置的 Artisan 命令，同样可以用于查看自定义的命令
- 
- ````php
- protected $signature = 'password:reset
-                         {userId : The ID of the user}
-                         {--sendEmail : Whether to send user an email}';
- ````
- 
- #### 输入
- 
- 有两种方式可以用于检索参数和选项的值
- 
- ##### argument()
- 
- 没有参数的 `$this->argument()` 会返回一个包含所有参数的数组，数组的第一个元素是命令；当传入参数时将会返回指定参数的值
- 
- ````php
- // 定义 "password:reset {userId}"
- php artisan password:reset 5
- 
- // $this->augument()
- [
+##### 必选参数、可选参数和默认参数
+
+- 必选参数用 `{}` 包起来  `password:reset {userId}`
+- 可选参数在后面加个 `?`   `password:reset {userId?}`
+- 默认的可选参数  `password:reset {userId=1}`
+
+##### 选项、待定值和默认值
+
+选项和参数类似，但是选项需要增加 `--` 前缀
+
+`password:reset {--sendEmail}`
+
+如果要为选项赋值，那么在它的 `signature` 属性后面跟一个等号, 定义时可以定义默认值
+
+`password:reset {--password=default}`
+
+##### 参数数组和选项数组
+
+使用 `*` 来定义数组
+
+`password:reset {userIds*}`
+
+`password:reset {--userIds*}`
+
+对应使用如下
+
+`password:reset 1 2 3`
+
+`password:reset --userIds=1 --userIds=2 --userIds=3`
+
+> 参数数组必须位于最后
+
+##### 输入描述
+
+`~ php artisan help` 命令可以用来查看内置的 Artisan 命令，同样可以用于查看自定义的命令
+
+````php
+protected $signature = 'password:reset
+                     {userId : The ID of the user}
+                     {--sendEmail : Whether to send user an email}';
+````
+
+#### 输入
+
+有两种方式可以用于检索参数和选项的值
+
+##### argument()
+
+没有参数的 `$this->argument()` 会返回一个包含所有参数的数组，数组的第一个元素是命令；当传入参数时将会返回指定参数的值
+
+````php
+// 定义 "password:reset {userId}"
+php artisan password:reset 5
+
+// $this->augument()
+[
     "command" => "password:reset",
     "userId" => "5"
- ]
- 
- // $this->argument('userId') 
- "5"
- ````
- 
- ##### option()
- 
- 没有参数的 `$this->option()` 会返回一个包含所有选项的数组，包括默认为 false 或者 null 的选项；当传入参数时，将会返回指定选项的值
- 
- ````
- // 定义 "password:reset {--userId=}
- php artisan password:reset --userId=5
- 
- // $this->option()
- [
+]
+
+// $this->argument('userId') 
+"5"
+````
+
+##### option()
+
+没有参数的 `$this->option()` 会返回一个包含所有选项的数组，包括默认为 false 或者 null 的选项；当传入参数时，将会返回指定选项的值
+
+````
+// 定义 "password:reset {--userId=}
+php artisan password:reset --userId=5
+
+// $this->option()
+[
     "userId" => "5",
     "help" => false,
     "quiet" => false,
@@ -267,8 +267,46 @@ public function handle()
     "no-ansi" => false,
     "no-interaction" => false,
     "env" => null
- ]
+]
+
+// $this->option('userId')
+"5"
+````
  
- // $this->option('userId')
- "5"
- ````
+##### 应用实例
+
+在 `handle()` 方法中使用上述方法获取参数和选项，并进行逻辑处理
+
+````
+public function handle()
+{
+ //
+ $userId = $this->argument('userId');
+ $sendEmail = $this->option('sendEmail');
+
+ echo '新用户 ID 为:'.$userId.PHP_EOL;
+ if ($sendEmail) {
+     echo '给用户发送邮件'.PHP_EOL;
+ }
+}
+````
+ 
+#### 提示
+ 
+在 `handle()` 代码中海油一些获取用户输入的方法，它们都会在执行命令的时候提示用户进行输入
+ 
+##### ask()
+
+提示用户输入文本
+
+````
+$email = $this->ask('What is your email address?');
+````
+ 
+##### secret()
+
+提示用户输入需要隐藏的内容，如密码
+
+````
+$password = $this->secret('What is your old password?');
+````
