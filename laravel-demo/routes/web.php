@@ -88,3 +88,4 @@ Route::resource('recipe', 'RecipeController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users/export','UsersController@export');
