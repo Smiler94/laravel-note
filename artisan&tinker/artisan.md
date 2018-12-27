@@ -343,3 +343,26 @@ public function handle()
     }
 }
 ````
+
+#### 输出
+
+在执行命令的时候，可能想给用户传递一些信息，最常见的就是用 `$this->info()` 来输出基本的提示文字
+
+````php
+$this->info('Your command has run successfully');
+````
+
+也可以用不同的方法来输出不同颜色的文字来展示不同的含义
+
+- comment() 橙色
+- question() 高亮青色
+- error() 高亮红色
+- line() 没有颜色
+
+##### 输出表
+
+也可以将数据展示为表格
+
+````php
+$headers = 
+````

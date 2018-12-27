@@ -27,16 +27,22 @@ class ResetPassword extends Command
         $oldPassword = $this->secret('What is your old password?');
 
         if ($oldPassword != $oldPasswordConfirm) {
-            exit('Sorry, the password you entered is wrong'.PHP_EOL);
+            $this->error('Sorry, the password you entered is wrong');
         } else {
             $newPassword = $this->secret('Please enter the new password');
 
             $passwordConfirm = $this->secret('Please enter the new password again');
 
             if ($newPassword != $passwordConfirm) {
-                exit('Sorry, the password you entered were different'.PHP_EOL);
+                $this->error('Sorry, the password you entered were different');
             } else {
-                exit("Hello, {$email}, your password has changed successfully".PHP_EOL);
+                $headers = ['name', 'password'];
+                $data = [
+                    [$email, $oldPassword],
+                    [$email, $newPassword]
+                ];
+                $this->comment("Hello, {$email}, your password has changed successfully");
+                $this->table($headers, $data);
             }
         }
     }
