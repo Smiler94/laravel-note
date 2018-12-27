@@ -364,5 +364,32 @@ $this->info('Your command has run successfully');
 也可以将数据展示为表格
 
 ````php
-$headers = 
+$headers = ['name', 'email'];
+$data = [
+    ['linzhen', '123@qq.com'],
+    ['linzhen2', '456@qq.com']
+];
+
+$this->table($headers, $data);
+````
+
+##### 进度条
+
+当命令的执行时间较长时，可以通过显示进度条来提示进度
+
+````php
+// app/Console/Commands/FileDownload.php
+public function handle()
+{
+    //
+    $totalSize = 10;
+    $this->info('Begin to download file');
+    $this->output->progressStart($totalSize); // 告诉 laravel 我们需要处理的总数，也可以理解为需要把进度条拆分的单元数
+    for($i = 0; $i < $totalSize; $i ++) {
+        sleep(1);
+        $this->output->progressAdvance(); // 每处理一个单元，就执行这个命令，让进度条前进
+    }
+    $this->output->progressFinish(); // 告诉 laravel 已处理完毕
+    $this->info('Completed');
+}
 ````
