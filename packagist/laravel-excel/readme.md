@@ -47,3 +47,49 @@ use App\Exports\UsersExport;
 
 Excel::download(new UsersExport, 'users.xlsx');
 ````
+
+#### 简单的导入
+
+先创建一个模型 Import 类，根目录在 `App/Imports`，可以使用 Artisan 创建
+
+````
+~ php artisan make:import UsersImport --model = User
+````
+
+生成的文件如下
+
+````
+// App/Imports/UserImport.php
+namespace App\Imports;
+
+use App\User;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\ToModel;
+
+class UserImport implements ToModel
+{
+    /**
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
+    public function model(array $row)
+    {
+        return new User([
+            //
+            'name' => $row[0],
+            'email' => $row[1],
+            'password' => Hash::make($row[2])
+        ]);
+    }
+}
+````
+
+然后就可以使用以下代码进行导入操作，将自动将表数据转成 Eloquent 模型并写入到数据库中
+
+````
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UserImport;
+
+Excel::import(new UserImport(), $request->file('file));
+````

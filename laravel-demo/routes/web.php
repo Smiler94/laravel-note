@@ -89,3 +89,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users/export','UsersController@export');
+Route::post('/users/import', 'UsersController@import');
