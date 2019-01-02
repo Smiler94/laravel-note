@@ -10,11 +10,15 @@ use Maatwebsite\Excel\Facades\Excel;
 class UsersController extends Controller
 {
     //
-    public function export()
+//    public function export()
+//    {
+//        return Excel::download(new UserExport(), 'users.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+//    }
+    public function export(Excel $excel)
     {
-        return Excel::download(new UserExport(), 'users.xlsx');
+//        return $excel::download(new UserExport(), 'users.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        return Excel::store(new UserExport(), 'users.xlsx', 's3');
     }
-
     public function import(Request $request)
     {
         Excel::import(new UserImport, $request->file('file'));
