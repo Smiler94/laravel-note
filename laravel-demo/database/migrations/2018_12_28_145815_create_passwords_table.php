@@ -32,6 +32,6 @@ class CreatePasswordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('passwords');
+        Schema::dropIfExists('password');
     }
 }
