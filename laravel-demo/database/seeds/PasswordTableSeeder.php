@@ -12,13 +12,7 @@ class PasswordTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('password')->insert([
-            'name' => 'test',
-            'account' => 'test',
-            'url' => 'laravel.lz',
-            'type' => 1,
-            'password' => '12313212',
-            'remark' => 'test'
-        ]);
+        $password = factory(Password::class);
+        var_dump($password);
     }
 }
