@@ -89,3 +89,10 @@ Composer 提供了一个 create-project 的命令，用于创建具有特定结�
 ### Artisan 和 Tinker
 
 [Artisan](./artisan&tinker/artisan.md)
+[tinker](./aritsan&tinker/tinker.md)
+
+### 数据库和 Eloquent
+
+[配置](./database/配置.md)
+[迁移](./database/迁移.md)
+[填充](./database/填充.md)
