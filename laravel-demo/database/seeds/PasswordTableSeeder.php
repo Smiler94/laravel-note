@@ -11,8 +11,7 @@ class PasswordTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        $password = factory(Password::class);
-        var_dump($password);
+        // 创建一个实例
+        $password = factory(App\Password::class, 10)->create();
     }
 }

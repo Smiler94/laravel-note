@@ -1,13 +1,13 @@
 <?php
 use Faker\Generator as Faker;
 
-$factory->define(Password::class, function (Faker $faker) {
+$factory->define(App\Password::class, function (Faker $faker) {
     return [
         'name' => $faker->name(),
-        'account' => $faker->account(),
-        'url' => 'test',
+        'account' => $faker->text(),
+        'url' => $faker->url(),
         'type' => 1,
         'password' => 'test',
-        'remark' => 'test'
+        'remark' => $faker->text()
     ];
 });
