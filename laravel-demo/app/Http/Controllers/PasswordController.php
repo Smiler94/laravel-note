@@ -18,7 +18,8 @@ class PasswordController extends Controller
         //
         // $passwords = Password::all();
         $password = DB::select('select * from password');
-        var_dump($password);
+        
+        return $password;
         // return $passwords->toJson();
     }
 
@@ -52,6 +53,10 @@ class PasswordController extends Controller
     public function show($id)
     {
         //
+        // $password = DB::select('select * from password where id = ?', [$id]);
+        $password = DB::table('password')->where('id', $id)->get();
+
+        return $password;
     }
 
     /**
