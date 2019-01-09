@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Password;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PasswordController extends Controller
 {
@@ -15,9 +16,10 @@ class PasswordController extends Controller
     public function index()
     {
         //
-        $passwords = Password::all();
-
-        return $passwords->toJson();
+        // $passwords = Password::all();
+        $password = DB::select('select * from password');
+        var_dump($password);
+        // return $passwords->toJson();
     }
 
     /**
