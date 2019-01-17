@@ -1,78 +1,84 @@
-#### 控制器
+# laravel的学习笔记
 
-控制器并不是一个应用程序的唯一入口，还可能有 cron作业(定时任务)、Artisan 命令行调用、队列作业等。因此业务逻辑尽量不在控制器中处理，控制器的主要任务是捕获 HTTP 请求，并传递给其他部分处理
+------
 
-控制器统一放在 `app/Http/Controllers` 目录下，可以使用 Artisan 来创建一个新的控制器
+- 框架安装
+- 目录结构
+- 启动和运行
 
-`~ php artisan make:controller NewController`
+### 安装
 
-#### 获取用户输入
+#### Composer
 
-控制器中最常见的操作上试从用户那里获取输入内容并对其进行处理，从 POST 中获取用户输入主要有两种方式：使用 Input facade或者请求对象 Request
+需要全局安装[composer](https://getcomposer.org),用于管理PHP的依赖关系，类似Node的NPM或python的pip
 
-##### 使用 Input
+#### 开发环境
 
-````php
-// TaskController.php
+- Laravel Valet
 
-use Illuminate\Support\Facades\Input;
-// 书上说也可以使用 \Input，实际操作发现会报错
-...
-public function store()
-{
-    $title = Input::get('title');
-    $description = Input::get('description');
+- Laravel Homested
     
-    return "title is {$title}, description is {$description}";
-}
-````
+#### 创建laravel项目
 
-##### 使用 Request 对象注入到控制器
+- 使用 Laravel 安装工具
+    
+如果已经全局安装好 Composer ，可以执行以下命令来安装 Laravel 安装工具
 
-在控制器的方法中指定需要的 Request 对象
+`~ composer global require "laravel/installer=~1.1"`
 
-````php
-// TaskController.php
+现在可以使用以下命令来创建一个新的 Laravel 项目
 
-public function store(\Illuminate\Http\Request $request)
-{
-    $title = $request->input('title');
-    $description = $request->input('description');
+`~ lavavel new projectName`
 
-    return "title is {$title}, description is {$description}";
-}
-````
+当前目录下会创建一个新的名为`projectName` 的子目录，并在其中创建了一个全新的 Laravel 项目
 
-#### 资源控制器
+- 通过 composer 的 create-project
 
-对于传统的 Rest/CURD 控制器，Laravel 定义了一套命名规范、开箱即用的开发工具以及对应的路由定义，这样就可以提高开发 Rest 接口的效率
+Composer 提供了一个 create-project 的命令，用于创建具有特定结构的新项目
 
-使用以下命令创建一个资源控制器
+`~ composer create-project laravel/laravel project-name --prefer-dist "5.5.*"`
 
-`~ php artisan make:controller TaskController --resource`
+执行效果和 Laravel 安装工具一致
 
-##### 资源控制器的方法
+### Laravel 目录结构
 
-生成的控制器中预先包含了 `index` 、`create` 、`store` 、`show` 、`edit` 、`update`  、`destory` 几个方法
-
-|HTTP动词|URI|控制器方法|路由名称|描述|
-|----|----|----|----|----|
-|GET|task|index()|task.index|显示所有任务|
-|GET|task/create|create()|task.create|显示创建任务表单|
-|POST|task|store()|task.store|新建表单提交数据|
-|GET|task/{taskId}|show()|task.show|显示一个任务|
-|GET|task/{taskId}/edit|edit()|task.edit|显示编辑任务表单|
-|PUT/PATCH|tasks/{taskId}|update()|task.update|根据Id更新表单提交数据|
-|DELETE|tasks/{taskId}|destroy()|task.destroy|删除一个任务|
-
-> 考虑能否使用给一个通用的控制器集成所有的 CURD 入口
-
-##### 绑定资源控制器
-
-为了不用手动为资源控制器的每个方法建立一个路由，Laravel 提供了“资源控制器绑定”的方法
+创建一个 demo，目录结构如下
 
 ````php
-// routes/web.php
-// 资源控制器的路由定义
-Route::resource('task', 'TaskController');
+- app/             应用程序大部分文件存放的地方，比如模型、控制器、路由定义、命令，以及 PHP 域名代码等
+- bootstrap/       包含了 Laravel 框架每次运行时使用的文件
+- config/          用于放置所有的配置文件
+- database/        用于放置数据库迁移和数据库种子文件
+- public/          当做站点运行时服务器指向的目录，该目录包含 index.php 入口文件，也放置一些公共文件，如图片、样式表、脚本或下载的文件等
+- resources/       用于放置所有非 PHP 的其他脚本文件，比如视图文件、语言文件、Sass/Lass，以及javaScript等
+- routes/          用于放置所有路由定义文件，包括 HTTP 路由、控制台路由和 Artisan 命令等 
+- storage/         用于放置缓存、日志和系统编译文件
+- tests/           用于放置单元测试用例和集成测试文件
+- vendor/          用于放置 Composer 安装的依赖关系文件，是一个 git 忽略文件
+- .env             指定环境变量，不同环境一些变量有差异在这里进行配置，是一个 git 忽略文件
+- .env.example     .env文件的模板
+- .gitattributes   git 配置文件
+- .gitignore       git 配置文件
+- artisan          从命令行运行 Artisan 命令的入口文件
+- composer.json    定义了项目的基本信息和依赖关系
+- composer.lock    composer 配置文件，不可编辑
+- package.json     npm 的配置文件，处理前端依赖
+- phpunit.xml      PHPUnit 的配置文件
+- readme.md        介绍项目的信息
+- server.php       备份服务器文件，尝试在功能较差的服务器中仍然对 Laravel 应用程序进行预览
+- webpack.mix.js   Glup 的配置文件
 ````
+
+### 启动和运行
+
+- 使用自带的服务器
+
+在项目根目录下使用以下命令来使用 php 自带服务器运行 Laravel 应用
+
+`~ php artisan serve`
+
+将会出现以下提示
+
+`Laravel development server started: <http://127.0.0.1:8000>`
+
+这时可以通过访问 `127.0.0.1:8000` 来访问应用

@@ -96,7 +96,10 @@ class PasswordController extends Controller
     public function test()
     {
         DB::connection()->enableQueryLog();
-        $password = DB::table('password')->whereBetween('id', [5,10])->get();
+        // $password = DB::table('password')->whereBetween('id', [5,10])->get();
+        // $password = DB::table('password')->whereNull('name')->get();
+        // $password = DB::table('password')->whereIn('id', [1,2])->whereRaw('type = 2')->get();
+        $password = DB::table('password')->select('type,name')->distinct()->get();
         
         $query = DB::getQueryLog();
         print_r($query);

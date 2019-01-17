@@ -131,7 +131,7 @@ return [
         'show_app_name'  => true,
         'logo'           => '', // e.g.: /images/logo.svg
         'fav'            => '', // e.g.: /fav.png
-        'theme'          => 'light',
+        'theme'          => 'dark',
         'code'           => 'dark',
         'back_to_top'    => true,
         'show_side_bar'  => true,

@@ -1,0 +1,57 @@
+# 数据库配置
+
+Laravel 中数据库的配置在 `config/database.php` 中，可以定义多个连接，然后设定默认使用的连接
+
+在每个连接中都可以定义连接及自定义每个连接类型相关的属性
+````php
+'connections' => [
+    'sqlite' => [
+        'driver' => 'sqlite',
+        'database' => env('DB_DATABASE', database_path('database.sqlite')),
+        'prefix' => '',
+    ],
+    'mysql' => [
+        'driver' => 'mysql',
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', '3306'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', 'forge'),
+        'password' => env('DB_PASSWORD', ''),
+        'unix_socket' => env('DB_SOCKET', ''),
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_unicode_ci',
+        'prefix' => '',
+        'strict' => true,
+        'engine' => null,
+    ],
+    'pgsql' => [
+        'driver' => 'pgsql',
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', '5432'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', 'forge'),
+        'password' => env('DB_PASSWORD', ''),
+        'charset' => 'utf8',
+        'prefix' => '',
+        'schema' => 'public',
+        'sslmode' => 'prefer',
+    ],
+    'sqlsrv' => [
+        'driver' => 'sqlsrv',
+        'host' => env('DB_HOST', 'localhost'),
+        'port' => env('DB_PORT', '1433'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', 'forge'),
+        'password' => env('DB_PASSWORD', ''),
+        'charset' => 'utf8',
+        'prefix' => '',
+    ],
+
+]
+````
+
+在代码里可以指定连接用于某次查询
+
+````php
+$user = DB::connection('secondary')->select('select * from users');
+````
