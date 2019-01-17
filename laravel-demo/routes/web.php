@@ -90,3 +90,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users/export','UsersController@export');
 Route::post('/users/import', 'UsersController@import');
+
+Route::resource('password', 'PasswordController');
+Route::get('/password_test', 'PasswordController@test');

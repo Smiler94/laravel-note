@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class PasswordTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//         $this->call('UsersTableSeeder');
-        $this->call(PasswordTableSeeder::class);
+        // 创建一个实例
+        $password = factory(App\Password::class, 10)->create();
     }
 }
