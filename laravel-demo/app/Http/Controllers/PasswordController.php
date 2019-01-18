@@ -99,7 +99,8 @@ class PasswordController extends Controller
         // $password = DB::table('password')->whereBetween('id', [5,10])->get();
         // $password = DB::table('password')->whereNull('name')->get();
         // $password = DB::table('password')->whereIn('id', [1,2])->whereRaw('type = 2')->get();
-        $password = DB::table('password')->select('type,name')->distinct()->get();
+        // $password = DB::table('password')->select('type,name')->distinct()->get();
+        DB::table('password')->groupBy('type')->havingRaw('count(id) > 10')->get();
         
         $query = DB::getQueryLog();
         print_r($query);
