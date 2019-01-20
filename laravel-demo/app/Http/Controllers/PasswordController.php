@@ -116,11 +116,19 @@ class PasswordController extends Controller
         
         // $password = DB::table('password')->value('url');
         // $password = DB::table('password')->count();
-        $password = DB::table('password')->min('id');
+        // $password = DB::table('password')->min('id');
+        
+        // $password = $password = DB::table('password')
+        //     ->join('user', 'user.id', '=', 'password.user_id')
+        //     ->select('password.*', 'user.name as u_name', 'user.email as u_email')
+        //     ->first();
+        //     
+        $first = DB::table('password')->where('id', 1);
+        $password = DB::table('password')->union($first)->where('id', 2)->get();
         $query = DB::getQueryLog();
         print_r($query);
 
-        print_r($password);
+        dump($password);
         // return $password;
     }
 }

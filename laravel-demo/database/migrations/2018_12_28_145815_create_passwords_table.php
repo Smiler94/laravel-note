@@ -15,6 +15,7 @@ class CreatePasswordsTable extends Migration
     {
         Schema::create('password', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('name', 100)->index();
             $table->string('account');
             $table->string('url');
