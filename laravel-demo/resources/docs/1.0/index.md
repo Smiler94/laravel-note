@@ -11,7 +11,7 @@
     - [Tinker](/docs/{{version}}/tinker)
 
 - ## 数据库和Eloquent
-    - [配置](/docs/{{version}}/database/config)
-    - [迁移](/docs/{{version}}/database/migrate)
-    - [填充](/docs/{{version}}/database/seed)
+    - [数据库配置](/docs/{{version}}/database/config)
+    - [数据库迁移](/docs/{{version}}/database/migrate)
+    - [数据填充](/docs/{{version}}/database/seed)
     - [查询构造器](/docs/{{version}}/database/query)
