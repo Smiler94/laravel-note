@@ -102,8 +102,21 @@ class PasswordController extends Controller
         // $password = DB::table('password')->select('type,name')->distinct()->get();
         // $password = DB::table('password')->groupBy('type')->havingRaw('count(id) > 10')->get();
         // $password = DB::table('password')->skip(10)->take(10)->get();
-        $password = DB::table('password')->latest('id')->get();
+        // $password = DB::table('password')->latest('id')->get();
+        // $password = DB::table('password')->inRandomOrder()->get();
+        // $password = DB::table('password')->get(['name', 'url']);
+        // $password = DB::table('password')->first(['name', 'url']);
+        // $password = DB::table('password')->find(1);
         
+        // try {
+        //     $password = \App\Password::findOrFail(100);
+        // } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        //     dump($e);exit;
+        // }
+        
+        // $password = DB::table('password')->value('url');
+        // $password = DB::table('password')->count();
+        $password = DB::table('password')->min('id');
         $query = DB::getQueryLog();
         print_r($query);
 

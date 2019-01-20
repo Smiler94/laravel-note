@@ -8,6 +8,8 @@ Laravel的数据库核心功能是查询构造器，也就是与数据库交互�
 - 原始 SQL 语句
 - 查询构造器链
 - 条件方法
+- 修改方法
+- 结束/返回结果
 
 ## DB Facade的基本使用
 
@@ -177,3 +179,107 @@ DB::table('password')->select('type,name')->distinct()->get();
 // select distinct `type,name` from password
 ```
 
+#### 修改方法
+
+这些方法改变了查询的结果
+
+- orderBy(colName, direction) 对结果进行指定列排序
+
+```php
+DB::table('password')->orderBy('id', 'desc')->get();
+
+// select * from password order by desc;
+// 第二个参数默认为 asc
+```
+
+- groupBy(colName) 和 having()或者havingRaw() 组合输出结果，having和havingRaw可以对组合的属性添加条件
+
+```php
+DB::table('password')->groupBy('type')->havingRaw('count(id) > 10')->get();
+
+// select * from password group by type having count(id) > 10;
+```
+
+- skip() 和 take() 大多时候用于分页，可以用它们来定义返回的行数以及在返回之前跳过多少行
+
+```php
+DB::table('password')->skip(10)->take(10)->get();
+
+// select * from `password` limit 10 offset 10;
+```
+
+- latest(colName) 按传入列按降序排序，相当于orderBy(colName, 'desc')
+- oldest(colName) 按传入列按升序排序，相当于orderBy(colName, 'asc')
+
+```php
+DB::table('password')->latest('id')->get();
+
+// select * from password order by desc;
+```
+
+- inRandomOrder() 将结果随机排序
+
+```php
+DB::table('password')->inRandomOrder()->get();
+
+// select * from `password` order by RAND()
+```
+
+#### 结束/返回结果
+
+定义好构造器，就可以用这些方法触发 sql 的执行
+
+- get() 获取所有结果
+
+```php
+// 可以传入数组来指定返回的列
+DB::table('password')->get(['name', 'url']);
+
+// select `name`, `url` from `password`
+```
+
+- first() 获取第一个结果 
+- firstOrFail() 同first()，如果没有结果则抛出异常
+
+```php
+DB::table('password')->first(['name', 'url']);
+
+// select `name`, `url` from `password` limit 1
+```
+- find(id) 获取指定id的值
+- findOrFail(id) 同find(id)，如果没有结果则抛出异常
+
+```php
+DB::table('password')->find(1);
+
+// select * from `password` where `id` = 1
+```
+> firstOrFail 和 findOrFail 只能应用于 Eloquent 模型，会抛出 `ModelNotFoundException` 异常
+
+- value(colName) 从第一行结果中取某个字段
+
+```php
+DB::table('password')->value('url');
+
+// select `url` from `password` limit 1
+
+```
+
+- count() 统计结果的数量
+
+```php
+DB::table('password')->count();
+
+// select count(*) as aggregate from `password`
+```
+
+- min(colName) 获取指定列的最小值
+- max(colName) 获取指定列的最大值
+- sum(colName) 获取指定列的和
+- avg(colName) 获取指定列的平均值
+
+```php
+DB::table('password')->min('id');
+
+// select min(`id`) as aggregate from `password` 
+```
