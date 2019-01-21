@@ -10,6 +10,11 @@ Laravel的数据库核心功能是查询构造器，也就是与数据库交互�
 - 条件方法
 - 修改方法
 - 结束/返回结果
+- 联表查询
+- union连接
+- 插入数据
+- 更新数据
+- 删除数据
 
 ## DB Facade的基本使用
 
@@ -254,7 +259,7 @@ DB::table('password')->find(1);
 
 // select * from `password` where `id` = 1
 ```
-> firstOrFail 和 findOrFail 只能应用于 Eloquent 模型，会抛出 `ModelNotFoundException` 异常
+> {warning} firstOrFail 和 findOrFail 只能应用于 Eloquent 模型，会抛出 `ModelNotFoundException` 异常
 
 - value(colName) 从第一行结果中取某个字段
 
@@ -282,4 +287,89 @@ DB::table('password')->count();
 DB::table('password')->min('id');
 
 // select min(`id`) as aggregate from `password` 
+```
+
+#### join 连接
+
+可以使用 `join()` 方法来创建连接
+
+```php
+$password = DB::table('password')
+            ->join('user', 'user.id', '=', 'password.user_id')
+            ->select('password.*', 'user.name', 'user.email')
+            ->first();
+
+// select `password`.*, `user`.`name` as `u_name`, `user`.`email` as `u_email` from `password` inner join `user` on `user`.`id` = `password`.`user_id` limit 1
+```
+
+`join()` 方法会创建一个内连接，也可以使用 `leftJoin()` 来创建左连接
+
+#### union 连接
+
+使用 `union()` 或者 `unionAll()` 来连接两个查询
+
+```php
+$first = DB::table('password')->where('id', 1);
+$password = DB::table('password')->union($first)->where('id', 2)->get();
+
+// select * from `password` where `id` = 1) union (select * from `password` where `id` = 2) 
+
+```
+
+#### 插入
+
+可以用 `insert()` 传入一个一维数组或者二维数组来插入数据，也可以使用 `insertGetId()` 来插入数组的同时获得自增的ID
+
+```php
+$password = DB::table('password')->insert([
+            'user_id' => 1,
+            'name' => 'abcds',
+            'account' => 'asdf',
+            'url' => '',
+            'type' => 1,
+            'password' => '123123',
+            'remark' => 'test'
+        ]);
+dump($password);
+// true
+
+$id = DB::table('password')->insertGetId([
+            'user_id' => 1,
+            'name' => 'abcds',
+            'account' => 'asdf',
+            'url' => '',
+            'type' => 1,
+            'password' => '123123',
+            'remark' => 'test'
+        ]);
+dump($id);
+// 32
+```
+
+#### 更新
+
+使用 `update()` 方法来更新数据，参数为修改的数据，返回结果为影响的行数
+
+```php
+$line = DB::table('password')->where('id', 32)->update(['name' => 'name32']);
+
+// update `password` set `name` = 'name32' where `id` = 32
+```
+
+也可以使用 `increment()` 和 `decrement()` 来快速递增和递减列
+
+```php
+$line = DB::table('password')->where('id', 32)->increment('type', 2);
+
+// update `password` set `type` = `type` + 2 where `id` = 32
+``` 
+
+#### 删除
+
+使用 `delete()` 方法来删除数据，将会删除所有满足查询条件的数据，返回删除的行数
+
+```php
+$line = DB::table('password')->where('url', '')->delete();
+
+// delete from `password` where `url` = ''
 ```

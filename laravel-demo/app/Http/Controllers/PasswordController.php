@@ -123,8 +123,34 @@ class PasswordController extends Controller
         //     ->select('password.*', 'user.name as u_name', 'user.email as u_email')
         //     ->first();
         //     
-        $first = DB::table('password')->where('id', 1);
-        $password = DB::table('password')->union($first)->where('id', 2)->get();
+        // $first = DB::table('password')->where('id', 1);
+        // $password = DB::table('password')->union($first)->where('id', 2)->get();
+        
+        // $password = DB::table('password')->insert([
+        //         'user_id' => 1,
+        //         'name' => 'abcds',
+        //         'account' => 'asdf',
+        //         'url' => '',
+        //         'type' => 1,
+        //         'password' => '123123',
+        //         'remark' => 'test'
+        //     ]);
+        
+        // $password = DB::table('password')->insertGetId([
+        //     'user_id' => 1,
+        //     'name' => 'abcds',
+        //     'account' => 'asdf',
+        //     'url' => '',
+        //     'type' => 1,
+        //     'password' => '123123',
+        //     'remark' => 'test'
+        // ]);
+        
+        // $password = DB::table('password')->where('id', 30)->update(['attributes' => json_encode([
+        //     'isAdmin' => true, 'isHome' => false])]);
+        // $password = DB::table('password')->where('id', 32)->increment('type', 2);
+        // $password = DB::table('password')->where('url', '')->delete();
+        // $password = DB::table('password')->where('attributes->isAdmin', true)->get();
         $query = DB::getQueryLog();
         print_r($query);
 
