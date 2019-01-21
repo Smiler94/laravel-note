@@ -17,3 +17,4 @@
     - [DB Facade](/docs/{{version}}/database/query)
     - [原始SQL语句](/docs/{{version}}/database/sql)
     - [查询构造链](/docs/{{version}}/database/query_chain)
+    - [数据库事务](/docs/{{version}}/database/transaction)
