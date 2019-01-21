@@ -14,4 +14,6 @@
     - [数据库配置](/docs/{{version}}/database/config)
     - [数据库迁移](/docs/{{version}}/database/migrate)
     - [数据填充](/docs/{{version}}/database/seed)
-    - [查询构造器](/docs/{{version}}/database/query)
+    - [DB Facade](/docs/{{version}}/database/query)
+    - [原始SQL语句](/docs/{{version}}/database/sql)
+    - [查询构造链](/docs/{{version}}/database/query_chain)
