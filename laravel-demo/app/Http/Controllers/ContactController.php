@@ -92,14 +92,27 @@ class ContactController extends Controller
         DB::connection()->enableQueryLog();
         // $contact = Contact::where('user_id', 2)->get();
         // $contact = Contact::find(1);
-        Contact::chunk(10, function($contacts) {
-            foreach($contacts as $contact) {
-                echo $contact->name.'<br/>';
-            }
-        });
+        // Contact::chunk(10, function($contacts) {
+        //     foreach($contacts as $contact) {
+        //         echo $contact->name.'<br/>';
+        //     }
+        // });
+         
+        // $contact = new Contact();
+        // $contact->name = 'abc';
+        // $contact->user_id = 3;
+        // $contact->email = 'test@abc.com';
+        // $contact->phone = '1231231';
+        // $contact->save();
 
+        $contact = Contact::create([
+            'name' => 'abcd',
+            'user_id' => 3,
+            'email' => 'test@abcd.com',
+            'phone' => '1231231123',
+        ]);
         $query = DB::getQueryLog();
         print_r($query);
-        // dump($contact);
+        dump($contact);
     }
 }

@@ -22,3 +22,4 @@
 - ## Eloquent
     - [Eloquent模型](/docs/{{version}}/eloquent/model)
     - [Eloquent查询](/docs/{{version}}/eloquent/query)
+    - [Eloquent插入和更新](/docs/{{version}}/eloquent/execute)
