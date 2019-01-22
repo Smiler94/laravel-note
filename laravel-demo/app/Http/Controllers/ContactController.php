@@ -90,10 +90,16 @@ class ContactController extends Controller
     public function test()
     {
         DB::connection()->enableQueryLog();
-        $contact = Contact::where('user_id', 2)->get();
+        // $contact = Contact::where('user_id', 2)->get();
+        // $contact = Contact::find(1);
+        Contact::chunk(10, function($contacts) {
+            foreach($contacts as $contact) {
+                echo $contact->name.'<br/>';
+            }
+        });
 
         $query = DB::getQueryLog();
         print_r($query);
-        dump($contact);
+        // dump($contact);
     }
 }

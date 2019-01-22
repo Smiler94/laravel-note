@@ -106,7 +106,7 @@ class PasswordController extends Controller
         // $password = DB::table('password')->inRandomOrder()->get();
         // $password = DB::table('password')->get(['name', 'url']);
         // $password = DB::table('password')->first(['name', 'url']);
-        // $password = DB::table('password')->find(1);
+        $password = DB::table('password')->find(1);
         
         // try {
         //     $password = \App\Password::findOrFail(100);
@@ -154,7 +154,7 @@ class PasswordController extends Controller
         // 
         // $query = DB::getQueryLog();
         // print_r($query);
-        // dump($password);
+        dump($password);
         // return $password;
     }
 }
