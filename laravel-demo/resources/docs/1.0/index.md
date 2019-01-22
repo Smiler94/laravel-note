@@ -10,7 +10,7 @@
     - [Artisan](/docs/{{version}}/artisan)
     - [Tinker](/docs/{{version}}/tinker)
 
-- ## 数据库和Eloquent
+- ## 数据库
     - [数据库配置](/docs/{{version}}/database/config)
     - [数据库迁移](/docs/{{version}}/database/migrate)
     - [数据填充](/docs/{{version}}/database/seed)
@@ -18,3 +18,7 @@
     - [原始SQL语句](/docs/{{version}}/database/sql)
     - [查询构造链](/docs/{{version}}/database/query_chain)
     - [数据库事务](/docs/{{version}}/database/transaction)
+
+- ## Eloquent
+    - [Eloquent模型](/docs/{{version}}/eloquent/model)
+    - [Eloquent查询](/docs/{{version}}/eloquent/query)

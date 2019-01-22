@@ -93,3 +93,6 @@ Route::post('/users/import', 'UsersController@import');
 
 Route::resource('password', 'PasswordController');
 Route::get('/password_test', 'PasswordController@test');
+
+Route::resource('contact', 'ContactController');
+Route::get('/contact_test', 'ContactController@test');

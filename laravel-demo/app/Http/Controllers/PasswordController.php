@@ -151,10 +151,10 @@ class PasswordController extends Controller
         // $password = DB::table('password')->where('id', 32)->increment('type', 2);
         // $password = DB::table('password')->where('url', '')->delete();
         // $password = DB::table('password')->where('attributes->isAdmin', true)->get();
-        $query = DB::getQueryLog();
-        print_r($query);
-
-        dump($password);
+        // 
+        // $query = DB::getQueryLog();
+        // print_r($query);
+        // dump($password);
         // return $password;
     }
 }
