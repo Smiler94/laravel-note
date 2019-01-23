@@ -53,3 +53,27 @@ $contact = Contact::create([
 ```
 
 > {warning} 通过 `create()` 方法来插入数据时，要保证传入的数组中的每一个元素都要在模型的 `$fillable` 属性中
+
+### 数据更新
+
+更新操作和插入类似，也有两种方法可以使用
+
+#### 使用模型实例
+
+先获得一个模型实例，然后改变属性，再使用 `save()` 方法进行保存
+
+```PHP
+$contact = Contact::find(1);
+$contact->name = 'test contact';
+$contact->save();
+```
+
+#### 通过调用update()
+
+先构造查询链，再调用 `update()` 方法，传入一个数组来更新
+
+```PHP
+Contact::where('id',1)->update([
+    'name' => 'test contact'
+]);
+```
