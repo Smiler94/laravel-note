@@ -105,11 +105,17 @@ class ContactController extends Controller
         // $contact->phone = '1231231';
         // $contact->save();
 
-        $contact = Contact::create([
-            'name' => 'abcd',
-            'user_id' => 3,
-            'email' => 'test@abcd.com',
-            'phone' => '1231231123',
+        // $contact = Contact::create([
+        //     'name' => 'abcd',
+        //     'user_id' => 3,
+        //     'email' => 'test@abcd.com',
+        //     'phone' => '1231231123',
+        // ]);
+        // 
+        $contact = Contact::firstOrCreate(['email' => 'linzhen@shein.com'], [
+            'user_id'=>1,
+            'name'=>'linzhen',
+            'phone' => '1231231'
         ]);
         $query = DB::getQueryLog();
         print_r($query);
