@@ -90,7 +90,7 @@ class ContactController extends Controller
     public function test()
     {
         DB::connection()->enableQueryLog();
-        // $contact = Contact::where('user_id', 2)->get();
+        $contact = Contact::where('user_id', 2)->get();
         // $contact = Contact::find(1);
         // Contact::chunk(10, function($contacts) {
         //     foreach($contacts as $contact) {
@@ -112,11 +112,13 @@ class ContactController extends Controller
         //     'phone' => '1231231123',
         // ]);
         // 
-        $contact = Contact::firstOrCreate(['email' => 'linzhen@shein.com'], [
-            'user_id'=>1,
-            'name'=>'linzhen',
-            'phone' => '1231231'
-        ]);
+        // $contact = Contact::firstOrCreate(['email' => 'linzhen@shein.com'], [
+        //     'user_id'=>1,
+        //     'name'=>'linzhen',
+        //     'phone' => '1231231'
+        // ]);
+        // $contact = Contact::find(1);
+        // $contact = $contact->delete();
         $query = DB::getQueryLog();
         print_r($query);
         dump($contact);
