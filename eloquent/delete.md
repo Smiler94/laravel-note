@@ -38,7 +38,7 @@ Contact::where('id', '>', 2)->delete();
 
 Eloquent的软删除需要在表中添加delete_at列，只要在Eloquent模型中开启了软删除，那么进行任何查询都会忽略被删除的数据，除非希望把它们包含进来
 
-#### 开启软删除
+##### 开启软删除
 
 开启软删除需要做三件事情
 
@@ -77,3 +77,14 @@ delete_at字段需要被标记为日期
 protected $dates = ['delete_at'];
 ```
 
+##### 基于软删除的查询
+
+开启了软删除之后，正常的查询将会自动过滤已经被删除的数据，且删除操作不会真的删除记录，而是在 delete_at 字段上记录被删除的时间
+
+```PHP
+$contact = Contact::find(2);
+// select * from `contacts` where `contacts`.`id` = 2 and `contacts`.`deleted_at` is null limit 1
+$contact = $contact->delete();
+// update `contacts` set `deleted_at` = '2019-01-29 11:07:23', `updated_at` = '2019-01-29 11:07:23' where `id` = 2
+```
+可以通过 `withTrashed()` 方法来查询被软删除的数据
