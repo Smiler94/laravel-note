@@ -82,3 +82,47 @@ delete_at字段需要被标记为日期
 protected $dates = ['delete_at'];
 ```
 
+#### 基于软删除的查询
+
+开启了软删除之后，正常的查询将会自动过滤已经被删除的数据，且删除操作不会真的删除记录，而是在 delete_at 字段上记录被删除的时间
+
+```PHP
+$contact = Contact::find(2);
+// select * from `contacts` where `contacts`.`id` = 2 and `contacts`.`deleted_at` is null limit 1
+$contact = $contact->delete();
+// update `contacts` set `deleted_at` = '2019-01-29 11:07:23', `updated_at` = '2019-01-29 11:07:23' where `id` = 2
+```
+
+可以通过 `withTrashed()` 方法来查询被软删除的数据
+
+```PHP
+$contact = Contact::withTrashed()->find(2);
+if ($contact->trashed()) {
+    // 操作
+}
+```
+
+也可以通过 `onlyTrashed()` 方法只获取软删除的数据
+
+#### 从软删除中恢复实体
+
+如果想恢复已经被软删除的条目，则可以在实例或查询中执行 `restore()` 方法
+
+```PHP
+$contact->restore();
+// 或者
+Contact::onlyTrashed()->where('id', 2)->restore();
+// update `contacts` set `deleted_at` = null, `updated_at` = '2019-01-31 12:05:59' where `contacts`.`deleted_at` is not null and `id` = 2
+```
+
+#### 强制删除软删除的实体
+
+可以在实体或查询中调用 `forceDelete()` 方法来删除一个软删除的实体
+
+```PHP
+$contact = Contact::onlyTrashed()->find(2);
+$contact->foreDelete();
+
+// select * from `contacts` where `contacts`.`id` = 2 limit 1
+// delete from `contacts` where `id` = 2
+```

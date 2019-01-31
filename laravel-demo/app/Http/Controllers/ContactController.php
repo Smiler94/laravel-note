@@ -117,8 +117,11 @@ class ContactController extends Controller
         //     'name'=>'linzhen',
         //     'phone' => '1231231'
         // ]);
-        $contact = Contact::find(2);
-        $contact = $contact->delete();
+        // $contact = Contact::find(2);
+        // $contact = $contact->delete();
+        $contact = Contact::withTrashed()->find(2);
+        // $contact = Contact::onlyTrashed()->where('id', 2)->restore();
+        $contact = $contact->forceDelete();
         $query = DB::getQueryLog();
         print_r($query);
         dump($contact);
