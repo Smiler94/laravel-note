@@ -96,3 +96,5 @@ Route::get('/password_test', 'PasswordController@test');
 
 Route::resource('contact', 'ContactController');
 Route::get('/contact_test', 'ContactController@test');
+
+Route::get('/test', 'TestController@test');
